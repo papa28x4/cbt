@@ -1,1 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet"-->
+    <link href="https://code.jquery.com/ui/1.12.1/themes/redmond/jquery-ui.css" rel="stylesheet">
+    <title>Computer Based Test</title>
+    <style>
+    *{
+        box-sizing: border-box;
+		
+		
+    }
+    .exam{
+        margin: 10px auto;
+        width: 70%;
+    }
+    #questions{
+        padding: 30px 10px 10px 20px;
+    }
+	li{
+        list-style: none;
+        padding: 5px 0;
+	}
 
+    legend{
+        color: Blue;
+        font-size: 2rem;
+    }
+    #questions h3{
+        color: Blue;
+    }
+	.green{
+		color: green;
+        font-weight: bold;
+	}
+	.red{
+		color: red;
+        font-weight: bold;
+	}
+    #q1,#q2,#q3,#q4,#q5{
+        
+        font-weight: bold;
+    }
+    #submitBtn{
+        margin: 20px;
+        float: right;
+    }
+    .hit{
+        background: url('images/tick.png') no-repeat;
+        background-position: 0;
+        background-position-y: 5px;
+    }
+    .miss{
+        background: url('images/cross.png') no-repeat;
+        background-position: 0;
+        background-position-y: 5px;
+    }
+    #test{
+        width: 100px;
+        height: 100px;
+    }
+    li span{
+        width: 50px;
+        height: 20px;
+        display: inline-block;
+        
+    }
+    </style>
+</head>
+<body>
+	
+	<div class="exam">
+		<fieldset>
+		<legend>Questions</legend>
+
+		<div id="questions">
+		<h3>1. Where is the administrative capital of South Africa?</h3>
+		<ul>
+			<li><label><input type="radio" name="q1" class="wrong"/> Johannesburg</label><span></span></li>
+			<li><label><input type="radio" name="q1" class="correct"/> Pretoria</label><span></span></li>
+			<li><label><input type="radio" name="q1" class="wrong"/> Durban</label><span></span></li>
+			<li><label><input type="radio" name="q1" class="wrong"/> Cape Town</label><span></span></li>
+
+		</ul>
+        <div id="q1"></div>
+        
+		<h3>2. Which country has won 5 AFCON titles?</h3>
+		<ul>
+			<li><label><input type="radio" name="q2" class="wrong"/> Egypt</label><span></span></li>
+			<li><label><input type="radio" name="q2" class="wrong"/> Ghana</label><span></span></li>
+			<li><label><input type="radio" name="q2" class="correct"/>Cameroun</label><span></span></li>
+			<li><label><input type="radio" name="q2" class="wrong"/> Nigeria</label><span></span></li>
+
+		</ul>
+        <div id="q2"></div>
+		<h3>3. Which is the most populated country in the world?</h3>
+		<ul>
+			<li><label><input type="radio" name="q3" class="wrong"/> India</label><span></span></li>
+			<li><label><input type="radio" name="q3" class="wrong"/> Brazil</label><span></span></li>
+			<li><label><input type="radio" name="q3" class="wrong"/> Russia</label><span></span></li>
+			<li><label><input type="radio" name="q3" class="correct"/> China</label><span></span></li>
+
+        </ul>
+        <div id="q3"></div>
+
+        <h3>4. Who is the current Balon d'Or winner?</h3>
+		<ul>
+			<li><label><input type="radio" name="q4" class="wrong"/> Messi</label><span></span></li>
+			<li><label><input type="radio" name="q4" class="wrong"/> Ronaldo</label><span></span></li>
+			<li><label><input type="radio" name="q4" class="wrong"/> Mbappe</label><span></span></li>
+			<li><label><input type="radio" name="q4" class="correct"/> Modric</label><span></span></li>
+
+        </ul>
+        <div id="q4"></div>
+
+        <h3>5. Which is not a planet?</h3>
+		<ul>
+			<li><label><input type="radio" name="q5" class="correct"/> Pluto</label><span></span></li>
+			<li><label><input type="radio" name="q5" class="wrong"/> Mercury</label><span></span></li>
+			<li><label><input type="radio" name="q5" class="wrong"/> Saturn</label><span></span></li>
+			<li><label><input type="radio" name="q5" class="wrong"/> None of the above</label><span></span></li>
+
+        </ul>
+        <div id="q5"></div>
+
+        <input id="submitBtn"type="button" value="Display Result">
+		</div>
+		
+        </fieldset>
+        <div id="display"></div>
+        
+	</div>
+	
+      
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(document).ready(function(){
+        
+        let explanations = ['Pretoria is the administrative capital of South Africa', 'Cameroun won their 5th title in 2017', 'With about 1.4 billion people, China is the most populated country', "Modric is the 2018 FIFA Ballon d'Or holder", "With recent discoveries, Pluto is no longer classified as a planet"]
+        
+        
+        let qNum = 5;
+        let counter = 0;
+        let result = ''
+			$("#questions").on('click', 'input[type="radio"]', function(){
+                
+                let question = $(this).attr('name');
+                let content = +question.charAt(1) - 1;
+                let prefix = '';
+                let explanation = $('div[id=' + question + ']');
+                
+                let span = $(this).parent().siblings('span');
+				if($(this).hasClass('correct')){
+                    $(this).parent().addClass('green');
+                    span.addClass('hit');
+                    prefix = '<span style="color:green;">Correct!</span> ';
+                    counter ++;
+                    
+				}else{
+                    $(this).parent().addClass('red');
+                    span.addClass('miss');
+                    prefix = '<span style="color:red;">Wrong!</span> ';
+				}
+                
+                explanation.html(prefix + explanations[content]);
+                
+                result = Math.floor((counter / qNum)* 100);
+
+                
+                
+                if (result >= 50){
+                    result = '<div style="color:green; text-align:center"><h3>You Passed!</h3> Score: ' + result + '% </div>';
+                }else{
+                    result = '<div style="color:red; text-align:center"><h3>You Failed!</h3> Score: ' + result + '% </div>';
+                }
+			})
+            
+            $('#submitBtn').button().on('click', function(){
+                $('#display').html(result).dialog({width:200, resizeable:false, modal: true});
+            })
+            var inp = document.getElementsByTagName('input');
+            for (var i = inp.length-1; i>=0; i--) {
+            if ('radio'===inp[i].type) inp[i].checked = false;
+            }
+		})
+	  
+
+	</script>
+</body>
+</html>
